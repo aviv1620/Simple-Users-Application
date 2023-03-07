@@ -44,4 +44,4 @@ This project was developed by Aviv Vexler. Remarks are welcome!
 If you not understand something in the code, please send me email or open issue on the [GitHub repository](https://github.com/aviv1620/Simple-Users-Application).  
   
 # Screenshot
-![screenshot](screenshot1.png)
+<img src="screenshot1.png" alt="screenshot" width="509"/>
