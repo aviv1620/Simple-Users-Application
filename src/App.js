@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Content } from './Content';
 import { UserAdder } from './UserAdder';
 import { Users } from './Users';
@@ -14,9 +14,20 @@ function App() {
   const [contentComponentKey, setContentComponentKey] = useState('not_selected')
   const [contentPanelUserID, setContentPanelUserID] = useState(-1) 
 
-  const user = users.find(item => item.id === contentPanelUserID)
-  const userTodos = todos.filter(item => item.userId === contentPanelUserID)
-  const userPosts = posts.filter(item => item.userId === contentPanelUserID) 
+  const user = useMemo(
+    () => findUserById(users,contentPanelUserID),
+    [users,contentPanelUserID]
+  )
+  
+  const userTodos = useMemo(
+    () => filterItemsByUserId(todos,contentPanelUserID),
+    [todos,contentPanelUserID]
+  ) 
+
+  const userPosts =  useMemo(
+    () => filterItemsByUserId(posts,contentPanelUserID),
+    [posts,contentPanelUserID]
+  )
 
   const effectLoadDatabase = () => {
     database.initialize()
@@ -48,10 +59,18 @@ function App() {
 
   return (
     <>
-     <Users users={users} todos={todos} database={database} viewer={viewUser} adder={viewAdder}/>
+     <Users users={users} todos={todos} database={database} viewer={viewUser} adder={viewAdder} currentIdView={contentPanelUserID}/>
      {getContentComponent()}    
     </>   
   );
+}
+
+function findUserById(users,id){
+  return users.find(item => item.id === id)
+}
+
+function filterItemsByUserId(item,id){
+  return item.filter(item => item.userId === id)
 }
 
 export default App;

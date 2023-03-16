@@ -1,14 +1,15 @@
 import { useState } from 'react'
 import { User } from './User'
 
-export const Users = ({users,todos,database,viewer,adder}) => {  
+export const Users = ({users,todos,database,viewer,currentIdView,adder}) => {  
   
   const [searchBox, setSearchBox] = useState('')
 
   const mapUsers = (item) => {
     const todosFiltered = todos.filter(task => task.userId === item.id)
+      
 
-    return <User key={item.id} user={item} todos={todosFiltered} database={database} viewer={viewer}/>
+    return <User key={item.id} user={item} todos={todosFiltered} database={database} viewer={viewer} isView={item.id === currentIdView}/>
   }
 
   const filterUsers = (item) => {

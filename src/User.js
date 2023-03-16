@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { UserOtherData } from './UserOtherData'
 
-export const User = ({user,todos,database,viewer}) => {
+export const User = ({user,todos,database,viewer,isView}) => {
   const [name, setName] = useState(user.name) 
   const [email, setEmail] = useState(user.email)
   const [moreData, setMoreData] = useState(false)
@@ -19,6 +19,13 @@ export const User = ({user,todos,database,viewer}) => {
     else
       return 'COMPLETED ✔'
   }  
+
+  const showViewStatus = () => {
+    if(isView)
+      return <>👁<br/></>
+    else
+      return ' '
+  }
 
   const updateUser = async () => {    
     const newUser = {...user,name,email}
@@ -44,6 +51,7 @@ export const User = ({user,todos,database,viewer}) => {
         Name : <input type="text" value={name} onInput={e=>setName(e.target.value)}/><br/>
         Email: <input type="email" value={email} onInput={e=>setEmail(e.target.value)}/><br/>
         Tasks Status: {showTasksStatus()}<br/>
+        {showViewStatus()}
           <button onClick={showMoreData}>Other data 📄</button>
           <button onClick={updateUser}>Update 📝</button>
           <button onClick={deleteUser}>Delete 🗑</button>
